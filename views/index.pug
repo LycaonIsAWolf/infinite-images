@@ -2,20 +2,21 @@ extends layout.pug
 
 block content 
 
-	form(action="/post" method="post")
-		div
-			textarea(type="text" id="body" name="body" cols="40" rows="5")
-		div
-			input(type="file" accept="image/*")
-		div
-			input(type="submit")
-
+	form(action="/post" method="post" enctype="multipart/form-data" class="submit-f")
+		textarea(class="u-full-width" id="body" name="body")
+		input(type="file" accept="image/*" name="image")
+		input(class="button-primary" type="submit" value="Submit")
 	hr
 
 	each post in posts
-		div(id=post.id)
+		div(class="row post" id=post.id)
 			- var time = new Date(post.time);
 			- var id = post.id;
-			span(class="post-id") #{id} | #{time.getMonth()}/#{time.getDate()}/#{time.getFullYear()} #{time.getHours()}:#{time.getMinutes()}:#{time.getSeconds()} 
-			div(class="post-body")=post.body
-			hr
+			a(class="post-id" href="/post/"+post.id) #{id} | #{time.getMonth()}/#{time.getDate()}/#{time.getFullYear()} #{time.getHours()}:#{time.getMinutes()}:#{time.getSeconds()} 
+			div
+				if post.image != ""
+					img(class="post-image seven columns" src="/uploads/"+post.image)
+				span(class="post-body seven columns")=post.body
+
+			
+		hr

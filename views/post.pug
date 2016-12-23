@@ -1,9 +1,15 @@
 extends layout.pug
 
 block content
-	- var time = new Date(post.time);
-	- var id = post.id;
-	span(class="post-id") #{id} | #{time.getMonth()}/#{time.getDate()}/#{time.getFullYear()} #{time.getHours()}:#{time.getMinutes()}:#{time.getSeconds()} 
-	div=post.body
+	div(class="row post" id=post.id)
+		- var time = new Date(post.time);
+		- var id = post.id;
+		span(class="post-id") #{id} | #{time.getMonth()}/#{time.getDate()}/#{time.getFullYear()} #{time.getHours()}:#{time.getMinutes()}:#{time.getSeconds()}
+		div
+			if post.image != ""
+				img(class="post-image seven columns" src="/uploads/"+post.image)
+			span(class="post-body seven columns")=post.body
+
+	hr
 
 	a(href="/") Back

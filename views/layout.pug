@@ -1,6 +1,17 @@
 doctype html
 html
 	head
+		meta(charset="utf-8")
+		title Infinite Images
+		meta(name="description" content="a single page anonymous imageboard")
+		meta(name="author" content="lycaon")
+
+		meta(name="viewport" content="width=device-width, initial-scale=1")
+
+		link(rel="stylesheet" href="/css/normalize.css")
+		link(rel="stylesheet" href="/css/skeleton.css")
+		link(rel="stylesheet" href="/css/style.css")
 	
 	body
-		block content
+		div(class="container")
+			block content
