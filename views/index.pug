@@ -1,18 +1,18 @@
 extends layout.pug
 
 block content 
-
-	form(action="/post" method="post" enctype="multipart/form-data" class="submit-f")
-		textarea(class="u-full-width" id="body" name="body")
+	form(action="/post" method="post" enctype="multipart/form-data" class="post-form")
+		textarea(class="u-full-width" id="body" name="body" placeholder="Write comment...")
 		input(type="file" accept="image/*" name="image")
 		input(class="button-primary" type="submit" value="Submit")
+		div(class="g-recaptcha" data-sitekey="6LcQnQ8UAAAAALfc37VTlnedyyyFprRZc6l0O2OM")
 	hr
 
 	each post in posts
 		div(class="row post" id=post.id)
 			- var time = new Date(post.time);
 			- var id = post.id;
-			a(class="post-id" href="/post/"+post.id) #{id} | #{time.getMonth()}/#{time.getDate()}/#{time.getFullYear()} #{time.getHours()}:#{time.getMinutes()}:#{time.getSeconds()} 
+			a(class="post-id" href="/posts/"+post.id) #{id} | #{time.getMonth()}/#{time.getDate()}/#{time.getFullYear()} #{time.getHours()}:#{time.getMinutes()}:#{time.getSeconds()} 
 			div
 				if post.image != ""
 					img(class="post-image seven columns" src="/uploads/"+post.image)
