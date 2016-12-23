@@ -42,23 +42,14 @@ router.get('/', function(req, res){
 });
 
 router.post('/post', upload.single('image'), function(req, res){
-	console.log("recaptcha: " + req.body["g-recaptcha-response"]);	
 
-	request.post("https://www.google.com/recaptcha/api/siteverify", {secret: config.recaptcha_secret, response: req.body["g-recaptcha-response"]}, function(error, response, body){
-		console.log('success: ' + JSON.parse(body)["success"]);
-		if(body["success"]){
-			var post = new Post(req.body.body, req.file != undefined ? path.basename(req.file.path) : "");
-			db.add_post(post, function(err){
-				if(err){
-					console.error(err);
-				}
-				else{
-					res.redirect('/posts/' + post.id);
-				}
-			});
+	var post = new Post(req.body.body, req.file != undefined ? path.basename(req.file.path) : "");
+	db.add_post(post, function(err){
+		if(err){
+			console.error(err);
 		}
 		else{
-			res.redirect(403, '/');
+			res.redirect('/posts/' + post.id);
 		}
 	});
 

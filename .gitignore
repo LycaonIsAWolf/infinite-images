@@ -9,3 +9,6 @@ node_modules
 #Secrets
 config.js
 
+#Uploads
+./static/uploads
+
