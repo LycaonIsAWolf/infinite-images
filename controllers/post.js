@@ -4,6 +4,7 @@ var Post = function(body, image, reply_to){
 	this.body = body;
 	this.image = image;
 	this.reply_to = reply_to != undefined ? reply_to : "";
+	this.replies = 0;
 }
 
 var idChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQURSTUVWXYZ12345678';

@@ -1,10 +1,17 @@
 extends layout.pug
 
 block content
+	if post.reply_to == ""
+		a(href="/") Back
+	else
+		a(href="/posts/" + post.reply_to) Back
+
+	hr
+
 	div(class="row post" id=post.id)
 		- var time = new Date(post.time);
 		- var id = post.id;
-		span(class="post-id") #{id} | #{time.getMonth()}/#{time.getDate()}/#{time.getFullYear()} #{time.getHours()}:#{time.getMinutes()}:#{time.getSeconds()}
+		span(class="post-id") #{id} | #{time.getMonth()}/#{time.getDate()}/#{time.getFullYear()} #{time.getHours()}:#{time.getMinutes()}:#{time.getSeconds()} | #{post.replies} replies
 		div
 			if post.image != ""
 				img(class="post-image seven columns" src="/uploads/"+post.image)
@@ -12,13 +19,11 @@ block content
 
 	hr
 
-	a(href="/") Back
-
 	each post in replies
 		div(class="row post" id=post.id)
 			- var time = new Date(post.time);
 			- var id = post.id;
-			a(class="post-id" href="/posts/"+post.id) #{id} | #{time.getMonth()}/#{time.getDate()}/#{time.getFullYear()} #{time.getHours()}:#{time.getMinutes()}:#{time.getSeconds()} 
+			a(class="post-id" href="/posts/"+post.id) #{id} | #{time.getMonth()}/#{time.getDate()}/#{time.getFullYear()} #{time.getHours()}:#{time.getMinutes()}:#{time.getSeconds()} | #{post.replies} replies
 			div
 				if post.image != ""
 					img(class="post-image seven columns" src="/uploads/"+post.image)
