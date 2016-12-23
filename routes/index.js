@@ -41,17 +41,29 @@ router.get('/', function(req, res){
 	})
 });
 
-router.post('/post', upload.single('image'), function(req, res){
+router.post('/', upload.single('image'), function(req, res){
 
-	var post = new Post(req.body.body, req.file != undefined ? path.basename(req.file.path) : "");
-	db.add_post(post, function(err){
-		if(err){
-			console.error(err);
-		}
-		else{
-			res.redirect('/posts/' + post.id);
-		}
-	});
+	if(req.body.body != "" || req.file != undefined){
+		var post = new Post(req.body.body, req.file != undefined ? path.basename(req.file.path) : "");
+		db.add_post(post, function(err){
+			if(err){
+				console.error(err);
+			}
+			else{
+				res.redirect('/posts/' + post.id);
+			}
+		});
+	}
+	else{
+		db.get_posts(function(rows, err){
+			if(!err){
+				res.render('index', {posts: rows.reverse(), error: "Post body and file cannot be empty."});
+			}
+			else{
+				console.error(err);
+			}
+		})		
+	}
 
 });
 

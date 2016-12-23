@@ -28,5 +28,9 @@ textarea{
 }
 
 .post-form{
-	padding-top: 5rem;
+	padding-top: 3rem;
+}
+
+.error{
+	color: #f00;
 }
