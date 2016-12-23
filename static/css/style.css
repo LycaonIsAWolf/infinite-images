@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Raleway');
-
+@import url('https://fonts.googleapis.com/css?family=Raleway|Ubuntu+Mono');
 body{
 	padding-top: 70px;
 	font-family:  'Raleway', sans-serif;
@@ -26,6 +25,7 @@ textarea{
 }
 
 .post-id{
+	font-family: 'Ubuntu Mono', monospace;
 	font-style: bold;
 	padding-left: 1rem;
 }

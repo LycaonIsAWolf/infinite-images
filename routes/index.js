@@ -37,6 +37,7 @@ var upload = multer({
 		})
 	});
 
+
 var router = express.Router();
 
 router.get('/', function(req, res){
@@ -52,7 +53,7 @@ router.get('/', function(req, res){
 
 router.post('/', upload.single('image'), function(req, res){
 
-	if(req.body.body != "" || req.file != undefined){
+	if(req.body.body != ""){
 		var post = new Post(marked(req.body.body), req.file != undefined ? "/uploads/" + path.basename(req.file.path) : "/images/placeholder-image.png");
 		db.add_post(post, function(err){
 			if(err){
@@ -66,7 +67,7 @@ router.post('/', upload.single('image'), function(req, res){
 	else{
 		db.get_posts(function(rows, err){
 			if(!err){
-				res.render('index', {posts: rows.reverse(), error: "Post body and file cannot be empty."});
+				res.render('index', {posts: rows.reverse(), error: "Post body cannot be empty."});
 			}
 			else{
 				console.error(err);
@@ -98,8 +99,8 @@ router.get('/posts/:id', function(req, res){
 });
 
 router.post('/posts/:id', upload.single('image'), function(req, res){
-	if(req.body.body != "" || req.file != undefined){
-		var reply = new Post(marked(req.body.body), req.file != undefined ? path.basename(req.file.path) : "", req.post.id);
+	if(req.body.body != ""){
+		var reply = new Post(marked(req.body.body), req.file != undefined ? "/uploads/" + path.basename(req.file.path) : "", req.post.id);
 		db.add_post(reply, function(err){
 			if(err){
 				console.error(err);
@@ -113,7 +114,7 @@ router.post('/posts/:id', upload.single('image'), function(req, res){
 	}
 	else{
 		db.get_replies(req.post.id, function(replies, err){
-			res.render('post', {post: req.post, replies: replies, error: "Post body and file cannot be empty."});
+			res.render('post', {post: req.post, replies: replies, error: "Post body cannot be empty."});
 		});
 	}
 });
