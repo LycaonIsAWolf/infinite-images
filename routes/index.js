@@ -53,7 +53,7 @@ router.get('/', function(req, res){
 router.post('/', upload.single('image'), function(req, res){
 
 	if(req.body.body != "" || req.file != undefined){
-		var post = new Post(marked(req.body.body), req.file != undefined ? path.basename(req.file.path) : "");
+		var post = new Post(marked(req.body.body), req.file != undefined ? "/uploads/" + path.basename(req.file.path) : "/images/placeholder-image.png");
 		db.add_post(post, function(err){
 			if(err){
 				console.error(err);
