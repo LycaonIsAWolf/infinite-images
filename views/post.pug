@@ -1,41 +1,14 @@
 extends layout.pug
 
 block content
+	+post(post)
+
+	each post in replies
+		+post(post)
+
+	+form("Reply...", '/posts/'+post.id)
+
 	if post.reply_to == ""
 		a(href="/") Back
 	else
 		a(href="/posts/" + post.reply_to) Back
-
-	hr
-
-	div(class="row post" id=post.id)
-		- var time = new Date(post.time);
-		- var id = post.id;
-		span(class="post-id") #{id} | #{time.getMonth()}/#{time.getDate()}/#{time.getFullYear()} #{time.getHours()}:#{time.getMinutes()}:#{time.getSeconds()} | #{post.replies} replies
-		div
-			if post.image != ""
-				img(class="post-image seven columns" src="/uploads/"+post.image)
-			span(class="post-body seven columns")=post.body
-
-	hr
-
-	each post in replies
-		div(class="row post" id=post.id)
-			- var time = new Date(post.time);
-			- var id = post.id;
-			a(class="post-id" href="/posts/"+post.id) #{id} | #{time.getMonth()}/#{time.getDate()}/#{time.getFullYear()} #{time.getHours()}:#{time.getMinutes()}:#{time.getSeconds()} | #{post.replies} replies
-			div
-				if post.image != ""
-					img(class="post-image seven columns" src="/uploads/"+post.image)
-				span(class="post-body seven columns")=post.body			
-		hr
-
-	form(method="post" enctype="multipart/form-data" class="post-form" action="/posts/"+post.id)
-		textarea(class="u-full-width" id="body" name="body" placeholder="Reply.")
-		input(type="file" accept="image/*" name="image")
-		input(class="button-primary" type="submit" value="Submit")
-	if error
-		div(class="error")=error
-	hr
-
-	a(href="/") Back

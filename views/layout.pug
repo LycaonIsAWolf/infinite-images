@@ -1,17 +1,45 @@
+mixin form(placeholder, action)
+	form(method="post" enctype="multipart/form-data" class="post-form" action=action)
+		div(class="form-group")
+			textarea(class="form-control" id="body" name="body" placeholder=placeholder)
+		div(class="form-group")
+			input(type="file" accept="image/*" name="image")
+		div(class="form-group")
+			input(class="btn btn-primary" type="submit" value="Submit")
+	if error
+		div(class="text-danger")=error
+	hr
+
+mixin post(post)
+	div(class="row post" id=post.id)
+		- var time = new Date(post.time);
+		- var id = post.id;
+		div
+			if post.image != ""
+				img(class="post-image img-responsive col-md-7" src="/uploads/"+post.image)
+			a(class="post-id text-center" href="/posts/"+post.id) #{id} | #{time.getMonth()}/#{time.getDate()}/#{time.getFullYear()} #{time.getHours()}:#{time.getMinutes()}:#{time.getSeconds()} | #{post.replies} replies
+			span(class="post-body text-left col-md-7")=post.body
+		
+	hr
+
 doctype html
 html
 	head
 		meta(charset="utf-8")
-		title Infinite Images
+		meta(http-equiv="X-UA-Compatible" content="IE=edge")
+		meta(name="viewport" content="width=device-width, initial-scale=1")
+
 		meta(name="description" content="a single page anonymous imageboard")
 		meta(name="author" content="lycaon")
 
-		meta(name="viewport" content="width=device-width, initial-scale=1")
+		title Infinite Images
 
-		link(rel="stylesheet" href="/css/normalize.css")
-		link(rel="stylesheet" href="/css/skeleton.css")
+		link(rel="stylesheet" href="/css/bootstrap.min.css")
 		link(rel="stylesheet" href="/css/style.css")
 	
 	body
-		div(class="container")
+		div(class="container-fluid")
 			block content
+
+		script(type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
+		script(type="text/javascript" src="js/bootstrap.min.js")

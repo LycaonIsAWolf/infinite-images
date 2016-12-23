@@ -1,6 +1,5 @@
 body{
-	color: #fff;
-	background-color: #111;
+
 }
 
 textarea{
@@ -9,7 +8,7 @@ textarea{
 }
 
 .post{
-	
+	background-color#555;
 }
 
 .post-image{
@@ -25,12 +24,13 @@ textarea{
 
 .post-id{
 	font-style: bold;
+	padding-left: 1rem;
 }
 
 .post-form{
-	padding-top: 3rem;
+
 }
 
 .error{
-	color: #f00;
+	color: #000;
 }
