@@ -5,6 +5,15 @@ var config = require('../config.js');
 var request = require('request');
 var path = require('path');
 
+var marked = require('marked');
+marked.setOptions({
+	gfm: true,
+	sanitize: true,
+	smartLists: true,
+	tables: true,
+	breaks: true
+});
+
 var multer = require('multer');
 var upload = multer({
 		fileFilter: function(req, file, cb){
@@ -44,7 +53,7 @@ router.get('/', function(req, res){
 router.post('/', upload.single('image'), function(req, res){
 
 	if(req.body.body != "" || req.file != undefined){
-		var post = new Post(req.body.body, req.file != undefined ? path.basename(req.file.path) : "");
+		var post = new Post(marked(req.body.body), req.file != undefined ? path.basename(req.file.path) : "");
 		db.add_post(post, function(err){
 			if(err){
 				console.error(err);
@@ -90,7 +99,7 @@ router.get('/posts/:id', function(req, res){
 
 router.post('/posts/:id', upload.single('image'), function(req, res){
 	if(req.body.body != "" || req.file != undefined){
-		var reply = new Post(req.body.body, req.file != undefined ? path.basename(req.file.path) : "", req.post.id);
+		var reply = new Post(marked(req.body.body), req.file != undefined ? path.basename(req.file.path) : "", req.post.id);
 		db.add_post(reply, function(err){
 			if(err){
 				console.error(err);

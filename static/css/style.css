@@ -1,5 +1,5 @@
 body{
-
+	padding-top: 70px;
 }
 
 textarea{
@@ -31,6 +31,15 @@ textarea{
 
 }
 
-.error{
-	color: #000;
+.page-header{
+
+}
+
+.image-upload{
+	width: 0.1px;
+	height: 0.1px;
+	opacity 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
 }

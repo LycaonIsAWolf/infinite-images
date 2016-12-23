@@ -3,9 +3,10 @@ mixin form(placeholder, action)
 		div(class="form-group")
 			textarea(class="form-control" id="body" name="body" placeholder=placeholder)
 		div(class="form-group")
-			input(type="file" accept="image/*" name="image")
+			label(for="image" class="btn btn-primary form-control") Choose a file
+			input(type="file" id="image" class="image-upload" accept="image/*" name="image")
 		div(class="form-group")
-			input(class="btn btn-primary" type="submit" value="Submit")
+			input(class="btn btn-primary form-control" type="submit" value="Submit")
 	if error
 		div(class="text-danger")=error
 	hr
@@ -18,7 +19,7 @@ mixin post(post)
 			if post.image != ""
 				img(class="post-image img-responsive col-md-7" src="/uploads/"+post.image)
 			a(class="post-id text-center" href="/posts/"+post.id) #{id} | #{time.getMonth()}/#{time.getDate()}/#{time.getFullYear()} #{time.getHours()}:#{time.getMinutes()}:#{time.getSeconds()} | #{post.replies} replies
-			span(class="post-body text-left col-md-7")=post.body
+			span(class="post-body text-left col-md-7")!=post.body
 		
 	hr
 
@@ -38,6 +39,17 @@ html
 		link(rel="stylesheet" href="/css/style.css")
 	
 	body
+		nav(class="navbar navbar-inverse navbar-fixed-top")
+			div(class="container-fluid")
+				div(class="navbar-header")
+					a(class="navbar-brand" href="/") Infinite Images
+				div(id="navbar" class="collapse navbar-collapse")
+					ul(class="nav navbar-nav")
+						li
+							a(href="https://twitter.com/lycaontalks") Twitter
+						li
+							a(href="#github") Github
+
 		div(class="container-fluid")
 			block content
 
