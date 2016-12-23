@@ -1,0 +1,21 @@
+extends layout.pug
+
+block content 
+
+	form(action="/post" method="post")
+		div
+			textarea(type="text" id="body" name="body" cols="40" rows="5")
+		div
+			input(type="file" accept="image/*")
+		div
+			input(type="submit")
+
+	hr
+
+	each post in posts
+		div(id=post.id)
+			- var time = new Date(post.time);
+			- var id = post.id;
+			span(class="post-id") #{id} | #{time.getMonth()}/#{time.getDate()}/#{time.getFullYear()} #{time.getHours()}:#{time.getMinutes()}:#{time.getSeconds()} 
+			div(class="post-body")=post.body
+			hr
