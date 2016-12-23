@@ -1,8 +1,9 @@
-var Post = function(body, image){
+var Post = function(body, image, reply_to){
 	this.id = get_id(10);
 	this.time = Date.now();
 	this.body = body;
 	this.image = image;
+	this.reply_to = reply_to != undefined ? reply_to : "";
 }
 
 var idChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQURSTUVWXYZ12345678';

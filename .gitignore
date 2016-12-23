@@ -10,5 +10,7 @@ node_modules
 config.js
 
 #Uploads
-./static/uploads
+*.gif
+*.png
+*.jpg
 

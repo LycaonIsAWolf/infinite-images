@@ -83,7 +83,30 @@ router.param('id', function(req, res, next, id){
 });
 
 router.get('/posts/:id', function(req, res){
-	res.render('post', {post: req.post});
+	db.get_replies(req.post.id, function(replies, err){
+		res.render('post', {post: req.post, replies: replies.reverse()});
+	});
+});
+
+router.post('/posts/:id', upload.single('image'), function(req, res){
+	if(req.body.body != "" || req.file != undefined){
+		var reply = new Post(req.body.body, req.file != undefined ? path.basename(req.file.path) : "", req.post.id);
+		db.add_post(reply, function(err){
+			if(err){
+				console.error(err);
+			}
+			else{
+				db.get_replies(req.post.id, function(replies, err){
+					res.render('post', {post: req.post, replies: replies});
+				});
+			}
+		});
+	}
+	else{
+		db.get_replies(req.post.id, function(replies, err){
+			res.render('post', {post: req.post, replies: replies, error: "Post body and file cannot be empty."});
+		});
+	}
 });
 
 module.exports = router;
