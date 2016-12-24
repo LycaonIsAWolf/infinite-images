@@ -2,7 +2,6 @@ var express = require('express');
 var db = require('../models/db.js');
 var post = require('../models/post.js');
 var config = require('../config.js');
-var request = require('request');
 var path = require('path');
 
 var multer = require('multer');
