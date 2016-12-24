@@ -13,4 +13,4 @@ config.js
 *.gif
 *.png
 *.jpg
-
+*.db

@@ -1,10 +1,14 @@
 var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database(':memory:');
+var db = new sqlite3.Database('./InfiniteImages.db');
 
 module.exports = {
 	initialize: function(){
 		db.serialize(function(){
-			db.run("CREATE TABLE posts (id CHAR(10) PRIMARY KEY NOT NULL, time INT NOT NULL, image TEXT NOT NULL, body TEXT NOT NULL, reply_to TEXT, replies INT, latest INT, nsfw TEXT)");
+			db.run("CREATE TABLE posts (id CHAR(10) PRIMARY KEY NOT NULL, time INT NOT NULL, image TEXT NOT NULL, body TEXT NOT NULL, reply_to TEXT, replies INT, latest INT, nsfw TEXT)", function(err){
+				if(err){
+					console.error(err);
+				}
+			});
 		});
 	},
 

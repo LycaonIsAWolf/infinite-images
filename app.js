@@ -27,13 +27,8 @@ app.use(function(req, res, next){
 	res.status(404).render('404');
 });
 
-db.initialize();
 
-fs.readdir('./static/uploads/', function(err, files){
-	for(var i = 0; i < files.length; i++){
-		fs.unlink('./static/uploads/' + files[i], function(err){});
-	}
-});
+db.initialize();
 
 var server = app.listen(process.env.PORT || 5000, function(){
 	var host = server.address().address;
