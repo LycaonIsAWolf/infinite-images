@@ -3,6 +3,13 @@ mixin form(placeholder, action)
 		div(class="form-group")
 			textarea(class="form-control" id="body" name="body" placeholder=placeholder)
 		div(class="form-group")
+			label(class="switch-light" onclick="")
+				input(type="checkbox" name="nsfw")
+				span(class="well nsfw-toggle")
+					span SFW
+					span NSFW
+					a(class="btn btn-primary")
+		div(class="form-group")
 			label(for="image" class="btn btn-primary form-control") Choose a file
 			input(type="file" id="image" class="image-upload" accept="image/*" name="image")
 		div(class="form-group")
@@ -11,16 +18,26 @@ mixin form(placeholder, action)
 		div(class="text-danger")=error
 	hr
 
-mixin post(post)
+mixin post(post, admin)
 	div(class="row post" id=post.id)
 		- var time = new Date(post.time);
-		- var id = post.id;
+		- var id = post.id;		
 		div
-			if post.image != ""
-				img(class="post-image img-responsive col-md-7" src=post.image)
+
+			if post.nsfw == undefined
+				a(href=post.image, data-toggle="lightbox")
+					img(class="post-image img-responsive col-md-7" src=post.image)
+			else
+				img(id="nsfw-image" class="post-image img-responsive col-md-7" src="/images/nsfw-image.png" hiding=post.image)
+
 			a(class="post-id text-center" href="/posts/"+post.id) #{id} | #{time.getMonth()}/#{time.getDate()}/#{time.getFullYear()} #{time.getHours()}:#{time.getMinutes()}:#{time.getSeconds()} | #{post.replies} replies
 			span(class="post-body text-left col-md-7")!=post.body
-		
+			if admin == true
+				form(method="POST" action="/admin")
+					div(class="form-group")
+						input(type="hidden" name="id" value=post.id)
+						input(class="btn btn-danger" type="submit" value="Remove")
+
 	hr
 
 doctype html
@@ -36,6 +53,8 @@ html
 		title Infinite Images
 
 		link(rel="stylesheet" href="/css/bootstrap.min.css")
+		link(rel="stylesheet" href="https://cdn.jsdelivr.net/css-toggle-switch/latest/toggle-switch.css")
+		link(rel="styleshet" href="/css/ekko-lightbox.min.css")
 		link(rel="stylesheet" href="/css/style.css")
 	
 	body
@@ -54,4 +73,14 @@ html
 			block content
 
 		script(type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
-		script(type="text/javascript" src="js/bootstrap.min.js")
+		script(type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js")
+		script(type="text/javascript" src="/js/ekko-lightbox.min.js")
+		script(type="text/javascript" src="/js/nsfw.js")
+
+		script.
+			$(document).on('click', '[data-toggle="lightbox"]', function(event) {
+			    event.preventDefault();
+			    $(this).ekkoLightbox({
+			    	alwaysShowClose: false
+			    });
+			});

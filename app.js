@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var db = require('./models/db.js');
 var index = require('./controllers/index.js');
 var posts = require('./controllers/posts.js');
+var admin = require('./controllers/admin.js');
 
 app.set('views', './views');
 app.set('view engine', 'pug');
@@ -17,6 +18,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use('/', index);
 app.use('/posts', posts);
+app.use('/admin', admin);
+app.use(function(err, req, res, next){
+	console.error(err.stack)
+	res.status(500).render('500');
+});
+app.use(function(req, res, next){
+	res.status(404).render('404');
+});
 
 db.initialize();
 

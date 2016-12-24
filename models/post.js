@@ -11,13 +11,14 @@ marked.setOptions({
 });
 
 
-var Post = function(body, image, reply_to){
+var Post = function(body, image, nsfw, reply_to){
 	this.id = get_id(10);
 	this.time = Date.now();
 	this.body = body;
 	this.image = image;
 	this.reply_to = reply_to;
 	this.replies = 0;
+	this.nsfw = nsfw;
 }
 
 var idChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQURSTUVWXYZ12345678';
@@ -33,6 +34,7 @@ function make_post(req, callback){
 	if(req.body.body != ""){
 		var post = new Post(marked(req.body.body), 
 							req.file != undefined ? "/uploads/" + path.basename(req.file.path) : "/images/placeholder-image.png",
+							req.body.nsfw,
 							req.post != undefined ? req.post.id : '');
 
 		db.add_post(post, function(err){

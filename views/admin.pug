@@ -1,0 +1,7 @@
+extends layout.pug
+
+block content
+	h1 Admin
+
+	each post in posts
+		+post(post, true)
