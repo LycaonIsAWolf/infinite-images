@@ -5,8 +5,9 @@ var fs = require('fs')
 var multer = require('multer');
 var bodyParser = require('body-parser');
 
-var db = require('./controllers/db.js');
-var index = require('./routes/index.js');
+var db = require('./models/db.js');
+var index = require('./controllers/index.js');
+var posts = require('./controllers/posts.js');
 
 app.set('views', './views');
 app.set('view engine', 'pug');
@@ -15,12 +16,12 @@ app.use(express.static('static'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use('/', index);
+app.use('/posts', posts);
 
 db.initialize();
 
 fs.readdir('./static/uploads/', function(err, files){
 	for(var i = 0; i < files.length; i++){
-		console.log(files[i]);
 		fs.unlink('./static/uploads/' + files[i], function(err){});
 	}
 });
