@@ -24,8 +24,12 @@ var upload = multer({
 			filename: function(req, file, cb){
 				cb(null, file.fieldname + "-" + Date.now() + path.extname(file.originalname));
 			}
-		})
-	});
+		}),
+
+		limits: {
+			fileSize: 10000000
+		}
+	}).single('image');
 
 
 var router = express.Router();
@@ -41,15 +45,30 @@ router.get('/', function(req, res){
 	})
 });
 
-router.post('/', upload.single('image'), function(req, res){
-	post.make_post(req, function(success, post, err){
-		if(success){
-			res.redirect('/posts/' + post.id);
+router.post('/', function(req, res){
+	upload(req, res, function(err){
+		if(!err){
+			post.make_post(req, function(success, post, err){
+				if(success){
+					res.redirect('/posts/' + post.id);
+				}
+				else{
+					db.get_posts(function(rows, er){
+						if(!er){
+							res.render('index', {posts: rows.reverse(), error: err});
+						}
+						else{
+							console.error(err);
+							res.redirect(500, '/');
+						}
+					})		
+				}
+			});
 		}
 		else{
 			db.get_posts(function(rows, er){
 				if(!er){
-					res.render('index', {posts: rows.reverse(), error: err});
+					res.render('index', {posts: rows.reverse(), error: "File bigger than file size limit of 10MB."});
 				}
 				else{
 					console.error(err);
@@ -57,8 +76,7 @@ router.post('/', upload.single('image'), function(req, res){
 				}
 			})		
 		}
-	});
-
+	})
 });
 
 
