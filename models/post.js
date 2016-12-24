@@ -31,7 +31,8 @@ function get_id(length){
 }
 
 function make_post(req, callback){
-	if(req.body.body != ""){
+	console.log(req.body.body.length);
+	if(req.body.body != "" && req.body.body.length <= 420){
 		var post = new Post(marked(req.body.body), 
 							req.file != undefined ? "/uploads/" + path.basename(req.file.path) : "/images/placeholder-image.png",
 							req.body.nsfw,
@@ -46,8 +47,11 @@ function make_post(req, callback){
 			}
 		});
 	}
-	else{
-		callback(false);
+	else if(req.body.body.length > 420){
+		callback(false, null, "Post body too long.");
+	}
+	else if(req.body.body == ""){
+		callback(false, null, "Post body cannot be empty.");
 	}
 }
 

@@ -42,14 +42,14 @@ router.get('/', function(req, res){
 });
 
 router.post('/', upload.single('image'), function(req, res){
-	post.make_post(req, function(success, post){
+	post.make_post(req, function(success, post, err){
 		if(success){
 			res.redirect('/posts/' + post.id);
 		}
 		else{
-			db.get_posts(function(rows, err){
-				if(!err){
-					res.render('index', {posts: rows.reverse(), error: "Post body cannot be empty."});
+			db.get_posts(function(rows, er){
+				if(!er){
+					res.render('index', {posts: rows.reverse(), error: err});
 				}
 				else{
 					console.error(err);

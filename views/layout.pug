@@ -1,7 +1,7 @@
 mixin form(placeholder, action)
 	form(method="post" enctype="multipart/form-data" class="post-form" action=action)
 		div(class="form-group")
-			textarea(class="form-control" id="body" name="body" placeholder=placeholder)
+			textarea(class="form-control" id="body" name="body" placeholder=placeholder, maxlength="420" minlength="1")
 		div(class="form-group")
 			label(class="switch-light" onclick="")
 				input(type="checkbox" name="nsfw")
@@ -51,6 +51,8 @@ html
 		meta(name="author" content="lycaon")
 
 		title Infinite Images
+
+		link(rel="shortcun icon" href="/images/favicon.png" type="image/x-icon")
 
 		link(rel="stylesheet" href="/css/bootstrap.min.css")
 		link(rel="stylesheet" href="https://cdn.jsdelivr.net/css-toggle-switch/latest/toggle-switch.css")

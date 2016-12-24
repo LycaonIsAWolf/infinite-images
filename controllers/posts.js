@@ -52,17 +52,17 @@ router.get('/:id', function(req, res){
 });
 
 router.post('/:id', upload.single('image'), function(req, res){
-	post.make_post(req, function(success, post){
+	post.make_post(req, function(success, post, err){
 		if(success){
 			db.get_replies(req.post.id, function(replies, err){
 				res.render('post', {post: req.post, replies: replies});
 			});
 		}
 		else{
-			db.get_posts(function(rows, err){
-				if(!err){
+			db.get_posts(function(rows, er){
+				if(!er){
 					db.get_replies(req.post.id, function(replies, err){
-						res.render('post', {post: req.post, replies: replies, error: "Post body cannot be empty."});
+						res.render('post', {post: req.post, replies: replies, error: err});
 					});
 				}
 				else{

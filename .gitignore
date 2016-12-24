@@ -9,8 +9,7 @@ node_modules
 #Secrets
 config.js
 
-#Uploads
-*.gif
-*.png
-*.jpg
+#Uploads/Posts
+/static/uploads/*
 *.db
+
