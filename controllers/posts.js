@@ -25,7 +25,7 @@ var upload = multer({
 				cb(null, file.fieldname + "-" + Date.now() + path.extname(file.originalname));
 			}
 		})
-	});
+	}).single('image');
 
 
 var router = express.Router();
@@ -51,27 +51,46 @@ router.get('/:id', function(req, res){
 	});
 });
 
-router.post('/:id', upload.single('image'), function(req, res){
-	post.make_post(req, function(success, post, err){
-		if(success){
-			db.get_replies(req.post.id, function(replies, err){
-				res.render('post', {post: req.post, replies: replies});
+router.post('/:id', function(req, res){
+	upload(req, res, function(err){
+		if(!err){
+			post.make_post(req, function(success, post, err){
+				if(success){
+					db.get_replies(req.post.id, function(replies, err){
+						res.render('post', {post: req.post, replies: replies});
+					});
+				}
+				else{
+					db.get_posts(function(rows, er){
+						if(!er){
+							db.get_replies(req.post.id, function(replies, err){
+								res.render('post', {post: req.post, replies: replies, error: err});
+							});
+						}
+						else{
+							console.error(err);
+							res.redirect(500, '/');
+						}
+					})	;	
+				}
 			});
 		}
 		else{
 			db.get_posts(function(rows, er){
 				if(!er){
 					db.get_replies(req.post.id, function(replies, err){
-						res.render('post', {post: req.post, replies: replies, error: err});
+						res.render('post', {post: req.post, replies: replies, error: "File bigger than max file size limit of 10MB."});
 					});
 				}
 				else{
 					console.error(err);
 					res.redirect(500, '/');
 				}
-			})		
+			});
 		}
+
 	});
+
 });
 
 module.exports = router;
