@@ -29,6 +29,13 @@ app.use(function(req, res, next){
 
 db.initialize();
 
+var uploadsDir = './static/uploads'
+
+if(!fs.existsSync(uploadsDir)){
+	console.log("made uploads directory");
+	fs.mkdirSync(uploadsDir);
+}
+
 var server = app.listen(process.env.PORT || 5000, function(){
 	var host = server.address().address;
 	var port = server.address().port;

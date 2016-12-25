@@ -11,13 +11,6 @@ module.exports = {
 				}
 			});
 		});
-
-		fs.mkdir('./static/uploads', function(err){
-			if(err){
-				console.error(err);
-			}
-		});
-
 	},
 
 	get_post: function(id, callback){
