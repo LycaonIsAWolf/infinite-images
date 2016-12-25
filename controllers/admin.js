@@ -1,7 +1,6 @@
 var express = require('express');
 var basic_auth = require('basic-auth');
 var db = require('../models/db.js');
-var config = require('./config.js');
 
 var router = express.Router();
 
@@ -16,7 +15,7 @@ var auth = function(req, res, next){
 		return unauthorized(res);
 	}
 
-	if(user.name === config.admin_user && user.pass === config.admin_pass){
+	if(user.name === process.env.ADMIN_USER && user.pass === process.env.ADMIN_PASS){
 		return next();
 	}
 	else{
