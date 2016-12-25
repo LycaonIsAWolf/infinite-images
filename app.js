@@ -29,6 +29,14 @@ app.use(function(req, res, next){
 
 db.initialize();
 
+fs.mkdir('./static/uploads', function(err){
+	if(err){
+		if(!err.code =='EEXIST'){
+			console.error("Error creating uploads folder: " + err);
+		}
+	}
+});
+
 var server = app.listen(process.env.PORT || 5000, function(){
 	var host = server.address().address;
 	var port = server.address().port;
