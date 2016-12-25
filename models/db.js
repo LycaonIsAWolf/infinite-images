@@ -79,6 +79,12 @@ module.exports = {
 						});
 					});
 				}
+				else{
+					var statement = db.prepare("DELETE FROM posts WHERE id = ?");
+					statement.run(post.id, function(err){
+						callback(err);
+					});
+				}
 			});
 		});
 	}
