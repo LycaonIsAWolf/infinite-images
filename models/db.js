@@ -1,5 +1,6 @@
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('./InfiniteImages.db');
+var fs = require('fs');
 
 module.exports = {
 	initialize: function(){
@@ -37,6 +38,12 @@ module.exports = {
 		});
 	},
 
+	get_all_posts: function(callback){
+		db.all("SELECT * FROM posts", function(err, rows){
+			callback(rows, err);
+		});
+	},
+
 	add_post: function(post, callback){
 		db.serialize(function(){
 			var statement = db.prepare("INSERT INTO posts VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
@@ -60,9 +67,18 @@ module.exports = {
 
 	remove_post: function(id, callback){
 		db.serialize(function(){
-			var statement = db.prepare("DELETE FROM posts WHERE id = ?");
-			statement.run(id, function(err){
-				callback(err);
+			db.get("SELECT * FROM posts WHERE id = ?", id, function(err, post){
+				if(post.image != '/images/placeholder-image.png'){
+					fs.unlink('./static' + post.image, function(err){
+						if(err){
+							console.error(err);
+						}
+						var statement = db.prepare("DELETE FROM posts WHERE id = ?");
+						statement.run(post.id, function(err){
+							callback(err);
+						});
+					});
+				}
 			});
 		});
 	}

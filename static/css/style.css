@@ -46,3 +46,7 @@ textarea{
 	position: absolute;
 	z-index: -1;
 }
+
+.navbar-link:hover{
+	color: #7353BA;
+}

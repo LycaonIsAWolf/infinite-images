@@ -55,7 +55,7 @@ html
 		link(rel="shortcun icon" href="/images/favicon.png" type="image/x-icon")
 
 		link(rel="stylesheet" href="/css/bootstrap.min.css")
-		link(rel="stylesheet" href="https://cdn.jsdelivr.net/css-toggle-switch/latest/toggle-switch.css")
+		link(rel="stylesheet" href="/css/toggle-switch.css")
 		link(rel="styleshet" href="/css/ekko-lightbox.min.css")
 		link(rel="stylesheet" href="/css/style.css")
 	
@@ -63,13 +63,13 @@ html
 		nav(class="navbar navbar-inverse navbar-fixed-top")
 			div(class="container-fluid")
 				div(class="navbar-header")
-					a(class="navbar-brand" href="/") Infinite Images
+					a(class="navbar-brand navbar-link" href="/") Infinite Images
 				div(id="navbar" class="collapse navbar-collapse")
 					ul(class="nav navbar-nav")
 						li
-							a(href="https://twitter.com/lycaontalks") Twitter
+							a(href="https://twitter.com/lycaontalks" class="navbar-link") Twitter
 						li
-							a(href="#github") Github
+							a(href="#github" class="navbar-link") Github
 
 		div(class="container-fluid")
 			block content

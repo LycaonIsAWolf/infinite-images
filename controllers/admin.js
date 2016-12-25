@@ -25,7 +25,7 @@ var auth = function(req, res, next){
 }
 
 router.get("/", auth, function(req, res){
-	db.get_posts(function(rows, err){
+	db.get_all_posts(function(rows, err){
 		if(!err){
 			res.render('admin', {posts: rows.reverse()});
 		}
@@ -38,7 +38,7 @@ router.get("/", auth, function(req, res){
 router.post("/", auth, function(req, res){
 	db.remove_post(req.body.id, function(err){
 		if(!err){
-			db.get_posts(function(rows, err){
+			db.get_all_posts(function(rows, err){
 				if(!err){
 					res.render('admin', {posts: rows.reverse()});
 				}
