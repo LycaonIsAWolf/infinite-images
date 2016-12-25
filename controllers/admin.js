@@ -1,7 +1,7 @@
 var express = require('express');
 var basic_auth = require('basic-auth');
 var db = require('../models/db.js');
-var config = require('../config.js');
+var config = require('./config.js');
 
 var router = express.Router();
 
