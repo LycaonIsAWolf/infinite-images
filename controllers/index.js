@@ -65,12 +65,14 @@ router.post('/', function(req, res){
 			});
 		}
 		else{
+			console.error("size error " + err);
 			db.get_posts(function(rows, er){
 				if(!er){
+					console.error("size error: " + err);
+					console.log("size error: " + err);
 					res.render('index', {posts: rows.reverse(), error: "File bigger than file size limit of 10MB."});
 				}
 				else{
-					console.error(err);
 					res.redirect(500, '/');
 				}
 			})		
