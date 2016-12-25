@@ -12,13 +12,12 @@ module.exports = {
 			});
 		});
 
-		if(fs.accessSync("./static/uploads")){
-			fs.mkdir("./static/uploads", function(err){
-				if(err){
-					console.error("Error creating uploads folder: " + err);
-				}
-			})
-		}
+		fs.mkdir('./static/uploads', function(err){
+			if(err){
+				console.error(err);
+			}
+		});
+
 	},
 
 	get_post: function(id, callback){
