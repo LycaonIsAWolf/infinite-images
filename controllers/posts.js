@@ -50,7 +50,7 @@ router.param('id', function(req, res, next, id){
 
 router.get('/:id', function(req, res){
 	db.get_replies(req.post.id, function(replies, err){
-		res.render('post', {post: req.post, replies: replies.reverse()});
+		res.render('post', {post: req.post, replies: replies});
 	});
 });
 
