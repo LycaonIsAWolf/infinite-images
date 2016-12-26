@@ -20,9 +20,9 @@ mixin form(placeholder, action)
 
 mixin post(post, admin)
 	div(class="row post" id=post.id)
-		- var time = new Date(post.time);
-		- var id = post.id;		
 		div
+			
+			- function make_timestamp(a){var b=new Date(a),c=b.getMonth()+1+"/"+b.getDate()+"/"+b.getFullYear(),d=(0==b.getHours()?"00":b.getHours())+":"+(0==b.getMinutes()?"00":b.getMinutes())+":"+(0==b.getSeconds()?"00":b.getSeconds());return c+" "+d}
 
 			if post.nsfw == undefined
 				a(href=post.image, data-toggle="lightbox")
@@ -30,7 +30,7 @@ mixin post(post, admin)
 			else
 				img(id="nsfw-image" class="post-image img-responsive col-md-7" src="/images/nsfw-image.png" hiding=post.image)
 
-			a(class="post-id text-center" href="/posts/"+post.id) #{id} | #{time.getMonth() + 1}/#{time.getDate()}/#{time.getFullYear()} #{time.getHours()}:#{time.getMinutes()}:#{time.getSeconds()} | #{post.replies} replies
+			a(class="post-id text-center" href="/posts/"+post.id) #{post.id} | #{make_timestamp(post.time)}
 			span(class="post-body text-left col-md-7")!=post.body
 			if admin == true
 				form(method="POST" action="/admin")

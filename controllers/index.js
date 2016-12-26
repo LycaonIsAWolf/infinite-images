@@ -57,7 +57,7 @@ router.post('/', function(req, res){
 							res.render('index', {posts: rows.reverse(), error: err});
 						}
 						else{
-							console.error(err);
+							console.error(err.stack);
 							res.redirect(500, '/');
 						}
 					})		
