@@ -29,14 +29,6 @@ app.use(function(req, res, next){
 
 db.initialize();
 
-if(process.env.LOCAL == "true"){
-	fs.readdir('./static/uploads/', function(err, files){
-		for(var i = 0; i < files.length; i++){
-			fs.unlink('./static/uploads/' + files[i], function(err){});
-		}
-	});
-}
-
 fs.mkdir('./static/uploads', function(err){
 	if(err){
 		if(!err.code =='EEXIST'){
