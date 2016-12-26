@@ -30,7 +30,7 @@ mixin post(post, admin)
 			else
 				img(id="nsfw-image" class="post-image img-responsive col-md-7" src="/images/nsfw-image.png" hiding=post.image)
 
-			a(class="post-id text-center" href="/posts/"+post.id) #{post.id} | #{make_timestamp(post.time)}
+			a(class="post-id text-center" href="/posts/"+post.id) #{post.id} | #{make_timestamp(post.time)} | #{post.replies}
 			span(class="post-body text-left col-md-7")!=post.body
 			if admin == true
 				form(method="POST" action="/admin")
