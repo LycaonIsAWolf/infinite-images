@@ -10,7 +10,7 @@ mixin form(placeholder, action)
 					span NSFW
 					a(class="btn btn-primary")
 		div(class="form-group")
-			label(for="image" class="btn btn-primary form-control") Choose a file
+			label(for="image" class="btn btn-primary form-control" id="file-select-label") Choose a file
 			input(type="file" id="image" class="image-upload" accept="image/*" name="image")
 		div(class="form-group")
 			input(class="btn btn-primary form-control" type="submit" value="Submit")
@@ -78,6 +78,7 @@ html
 		script(type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js")
 		script(type="text/javascript" src="/js/ekko-lightbox.min.js")
 		script(type="text/javascript" src="/js/nsfw.js")
+		script(type="text/javascript" src="/js/fileselect.js")
 
 		script.
 			$(document).on('click', '[data-toggle="lightbox"]', function(event) {
