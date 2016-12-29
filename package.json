@@ -10,12 +10,15 @@
   "author": "lycaon",
   "license": "MIT",
   "dependencies": {
+    "aws-sdk": "^2.7.19",
     "basic-auth": "^1.1.0",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "marked": "^0.3.6",
     "multer": "^1.2.1",
+    "multer-s3": "^2.5.0",
     "pg": "^6.1.2",
-    "pug": "^2.0.0-beta6"
+    "pug": "^2.0.0-beta6",
+    "request": "^2.79.0"
   }
 }

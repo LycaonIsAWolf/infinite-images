@@ -1,6 +1,9 @@
 var path = require('path');
 var db = require('./db.js');
 
+var aws = require('aws-sdk');
+var s3 = new aws.S3();
+
 var marked = require('marked');
 marked.setOptions({
 	gfm: true,
@@ -34,7 +37,7 @@ function make_post(req, callback){
 	console.log(req.body.body.length);
 	if(req.body.body != "" && req.body.body.length <= 420){
 		var post = new Post(marked(req.body.body), 
-							req.file != undefined ? "/uploads/" + path.basename(req.file.path) : "/images/placeholder-image.png",
+							req.file != undefined ? req.file.location : "/images/placeholder-image.png",
 							req.body.nsfw,
 							req.post != undefined ? req.post.id : '');
 
@@ -54,6 +57,7 @@ function make_post(req, callback){
 		callback(false, null, "Post body cannot be empty.");
 	}
 }
+
 
 module.exports.Post = Post;
 module.exports.make_post = make_post;

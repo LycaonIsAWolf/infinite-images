@@ -1,3 +1,5 @@
+- function make_timestamp(a){var b=new Date(a),c=b.getMonth()+1+"/"+b.getDate()+"/"+b.getFullYear(),d=(0==b.getHours()?"00":b.getHours())+":"+(0==b.getMinutes()?"00":b.getMinutes())+":"+(0==b.getSeconds()?"00":b.getSeconds());return c+" "+d}
+
 mixin form(placeholder, action)
 	form(method="post" enctype="multipart/form-data" class="post-form" action=action)
 		div(class="form-group")
@@ -21,16 +23,13 @@ mixin form(placeholder, action)
 mixin post(post, admin)
 	div(class="row post" id=post.id)
 		div
-			
-			- function make_timestamp(a){var b=new Date(a),c=b.getMonth()+1+"/"+b.getDate()+"/"+b.getFullYear(),d=(0==b.getHours()?"00":b.getHours())+":"+(0==b.getMinutes()?"00":b.getMinutes())+":"+(0==b.getSeconds()?"00":b.getSeconds());return c+" "+d}
-
 			if post.nsfw == undefined
 				a(href=post.image, data-toggle="lightbox")
 					img(class="post-image img-responsive col-md-7" src=post.image)
 			else
-				img(id="nsfw-image" class="post-image img-responsive col-md-7" src="/images/nsfw-image.png" hiding=post.image)
+				img(class="post-image img-responsive col-md-7 nsfw-image" src="/images/nsfw-image.png" hiding=post.image)
 
-			a(class="post-id text-center" href="/posts/"+post.id) #{post.id} | #{make_timestamp(post.time)} | #{post.replies}
+			a(class="post-id text-center" href="/posts/"+post.id) #{post.id} | #{make_timestamp(post.time)} | #{post.replies} replies
 			span(class="post-body text-left col-md-7")!=post.body
 			if admin == true
 				form(method="POST" action="/admin")
