@@ -53,7 +53,10 @@ module.exports = {
 	get_replies: function(id, callback){
 		pool.connect(function(err, client, done){
 			client.query({text:"SELECT * FROM posts WHERE reply_to = $1", values:[id]}, function(err, result){
-				callback(result.rows, err);
+				posts = result.rows.sort(function(a, b){
+					return a.time - b.time;
+				});			
+				callback(posts, err);
 				done();
 			});
 		});

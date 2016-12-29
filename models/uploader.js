@@ -21,7 +21,7 @@ var upload = multer({
 			bucket: process.env.S3_BUCKET,
 			acl: 'public-read',
 			cacheControl: 'max-age=86400',
-			contentType: multerS3.AUTO_CONTENT_TYPE,
+			contentType: multers3.AUTO_CONTENT_TYPE,
 			metadata: function(req, file, cb){
 				cb(null, {fieldName: file.fieldname});
 			},
